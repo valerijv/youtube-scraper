@@ -3,12 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ChannelRepository")
  * @ORM\HasLifecycleCallbacks
+ * @JMS\ExclusionPolicy("all")
  */
 class Channel
 {
@@ -24,11 +25,13 @@ class Channel
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Expose
      */
     private $channelId;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Expose
      */
     private $name;
 
@@ -59,7 +62,7 @@ class Channel
         return $this;
     }
 
-    public function getVideos(): ArrayCollection
+    public function getVideos()
     {
         return $this->videos;
     }

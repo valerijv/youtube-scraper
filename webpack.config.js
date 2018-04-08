@@ -15,10 +15,10 @@ Encore
     .enableVersioning(Encore.isProduction())
 
     // uncomment to define the assets of the project
-    // .addStyleEntry('css/app', './assets/css/app.scss')
+    .addStyleEntry('css/app', './assets/app.scss')
 
     // uncomment if you use Sass/SCSS files
-    // .enableSassLoader()
+    .enableSassLoader()
 ;
 
 module.exports = Encore.getWebpackConfig();

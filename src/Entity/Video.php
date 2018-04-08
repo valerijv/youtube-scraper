@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
+use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Table(
@@ -13,6 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\VideoRepository")
  * @ORM\HasLifecycleCallbacks
+ * @JMS\ExclusionPolicy("all")
  */
 class Video
 {
@@ -28,28 +31,35 @@ class Video
     /**
      * @ORM\ManyToOne(targetEntity="Channel", inversedBy="videos")
      * @ORM\JoinColumn(nullable=false)
+     * @JMS\Expose
      */
     private $channel;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Expose
      */
     private $videoId;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Expose
      */
     private $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
      */
     private $description;
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Expose
      */
     private $publishedAt;
+
+    private $score;
 
     /**
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="videos")
@@ -129,6 +139,31 @@ class Video
     public function setPublishedAt(\DateTimeInterface $publishedAt): self
     {
         $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("published")
+     */
+    public function getPublished()
+    {
+        return Carbon::instance($this->getPublishedAt())->diffForHumans();
+    }
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("score")
+     */
+    public function getScore()
+    {
+        return $this->score;
+    }
+
+
+    public function setScore($score): self
+    {
+        $this->score = $score;
 
         return $this;
     }
