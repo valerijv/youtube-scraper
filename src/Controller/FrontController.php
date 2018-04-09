@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Stats;
+use App\Entity\Tag;
 use App\Entity\Video;
 use JMS\Serializer\SerializerBuilder;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -24,13 +26,18 @@ class FrontController extends Controller
     {
         return $this->render('base.html.twig');
     }
+
     /**
      * @Route("/videos", name="videos")
      */
-    public function videos()
+    public function videos(Request $request)
     {
-        $videos = $this->getDoctrine()->getRepository(Video::class)
-            ->findAll();
+        if (is_numeric($request->get('tag'))) {
+            $tag = $this->getDoctrine()->getRepository(Tag::class)->find($request->get('tag'));
+            $videos = $tag->getVideos();
+        } else {
+            $videos = $this->getDoctrine()->getRepository(Video::class)->findAll();
+        }
 
         $channelMedians = [];
 
@@ -53,6 +60,19 @@ class FrontController extends Controller
 
         return $this->json(
             $this->serializer->toArray($videos)
+        );
+    }
+
+    /**
+     * @Route("/tags", name="tags")
+     */
+    public function tags(Request $request)
+    {
+        $tags = $this->getDoctrine()->getRepository(Tag::class)
+            ->findByQuery($request->get('query', 'a'));
+
+        return $this->json(
+            $this->serializer->toArray($tags)
         );
     }
 }

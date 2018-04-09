@@ -62,7 +62,8 @@ class Video
     private $score;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="videos")
+     * @ORM\ManyToMany(targetEntity="Tag", mappedBy="videos")
+     * @JMS\Expose
      */
     private $tags;
 
@@ -72,8 +73,10 @@ class Video
 
     public function addTag(Tag $tag): self
     {
-        $tag->addVideo($this);
-        $this->tags[] = $tag;
+        if (!$this->tags->contains($tag)) {
+            $tag->addVideo($this);
+            $this->tags[] = $tag;
+        }
 
         return $this;
     }
@@ -151,6 +154,7 @@ class Video
     {
         return Carbon::instance($this->getPublishedAt())->diffForHumans();
     }
+
     /**
      * @JMS\VirtualProperty
      * @JMS\SerializedName("score")
@@ -166,5 +170,10 @@ class Video
         $this->score = $score;
 
         return $this;
+    }
+
+    public function getTags()
+    {
+        return $this->tags;
     }
 }

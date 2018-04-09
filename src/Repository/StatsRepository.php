@@ -66,7 +66,7 @@ class StatsRepository extends ServiceEntityRepository
         return $median;
     }
 
-    public function getVideoMedian(int $videoId): ?int
+    public function getVideoMedian(int $videoId): ? int
     {
         $conn = $this->getEntityManager()->getConnection();
 

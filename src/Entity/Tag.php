@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Table(
@@ -12,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  *   }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
+ * @JMS\ExclusionPolicy("all")
  */
 class Tag
 {
@@ -19,11 +21,13 @@ class Tag
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @JMS\Expose
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Expose
      */
     private $name;
 
@@ -38,10 +42,6 @@ class Tag
 
     public function addVideo(Video $video): ?self
     {
-        if ($this->videos->contains($video)) {
-            return null;
-        }
-
         $this->videos[] = $video;
 
         return $this;
@@ -62,5 +62,10 @@ class Tag
         $this->name = $name;
 
         return $this;
+    }
+
+    public function getVideos()
+    {
+        return $this->videos;
     }
 }

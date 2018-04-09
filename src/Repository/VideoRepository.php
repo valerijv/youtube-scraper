@@ -38,4 +38,22 @@ class VideoRepository extends ServiceEntityRepository
             ->getSingleScalarResult()
             ;
     }
+
+    public function findByTag($tag)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            select video.* from 
+            SELECT s.created_at FROM stats s
+            left join video v on v.id = s.video_id
+            where v.channel_id = :channel_id
+            order by s.created_at asc;
+        ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['channel_id' => $channelId]);
+
+        return $stmt->fetchAll();
+
+    }
 }

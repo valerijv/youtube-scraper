@@ -80,6 +80,7 @@ class AppGetVideosCommand extends Command
                     ->setDescription($videoData->getDescription())
                     ->setPublishedAt(new \DateTime($videoData->getPublishedAt()));
                 $this->em->persist($video);
+                $this->em->flush();
 
                 $videos[] = $video;
                 $this->videoCount++;

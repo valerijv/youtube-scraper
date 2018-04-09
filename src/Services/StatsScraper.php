@@ -42,10 +42,11 @@ class StatsScraper
                     $tag = $this->em->getRepository(Tag::class)->findOneByName($value);
                     if (!$tag) {
                         $tag = new Tag;
+                        $tag->setName($value);
+                        $this->em->persist($tag);
+                        $this->em->flush($video);
                     }
-                    $tag->setName($value)
-                        ->addVideo($video);
-                    $this->em->persist($tag);
+                    $video->addTag($tag);
                 }
             }
         }
