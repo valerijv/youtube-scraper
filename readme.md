@@ -38,11 +38,13 @@ This command will fetch all videos or fetch only new videos if Channel already e
 ```
 php bin/console app:get-videos UCnciA_RZVjq9DMvx1KB625Q
 ```
+![Scraping videos](./readme/get-videos.png)
 
 To scrape only statistics (views, likes, dislikes, comments and favorites) use following command:
 ```
 php bin/console app:get-stats UCnciA_RZVjq9DMvx1KB625Q
 ```
+![Scraping stats](./readme/get-stats.png)
 
 Each scraper request gets you 50 Videos.  
 Google API read quota limits are around 50,000 requests per project per day.  
