@@ -36,7 +36,8 @@ class FrontController extends Controller
             $tag = $this->getDoctrine()->getRepository(Tag::class)->find($request->get('tag'));
             $videos = $tag->getVideos();
         } else {
-            $videos = $this->getDoctrine()->getRepository(Video::class)->findAll();
+            $videos = $this->getDoctrine()->getRepository(Video::class)
+                ->findBy([], [], 1000);
         }
 
         $channelMedians = [];
