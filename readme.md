@@ -22,9 +22,19 @@ build frontend:
 ./node_modules/.bin/encore production
 ```
 
+Set your web server to point to folder, otherwise it won't work:
+```
+youtube-scraper/public
+```
+Or if you really want to use a folder, you will have to add a path in webpack.config.js 
+```
+.setPublicPath('/youtube-scraper/public/build')
+```
+
+
 ### Scraping
 To scrape a channel use following command and specify a Youtube Channel ID. 
-This command will fetch all videos or update with new videos if they already exist in your database. 
+This command will fetch all videos or fetch only new videos if Channel already exist in your database. 
 ```
 php bin/console app:get-videos UCnciA_RZVjq9DMvx1KB625Q
 ```
@@ -34,16 +44,11 @@ To scrape only statistics (views, likes, dislikes, comments and favorites) use f
 php bin/console app:get-stats UCnciA_RZVjq9DMvx1KB625Q
 ```
 
-You can now access results at:
-```
-http://localhost/youtube-scraper/public/
-```
-
 Each scraper request gets you 50 Videos.  
-Google API read quota limits is around 50,000 requests per project per day.  
-Which will you scrape about 1.25 million new youtube videos per day.  
+Google API read quota limits are around 50,000 requests per project per day.  
+Which will let you scrape about 1.25 million new youtube videos per day.  
 Or will update statistics for 2.5 million existing videos.  
-This numbers can easily be increased, by creating multiple google projects.  
+This numbers can be increased, by creating multiple google projects.  
 
 ### Scaling
 You can easily run several scrapers in parallel. 
@@ -60,5 +65,4 @@ It scales well and it has great aggregation queries like range and date histogra
 
 ##### Varnish cache
 Finally, you might want to consider using Varnish Cache for caching static HTML pages with your statistics.  
-This is great, because it will serve HTML directly to user, not using server resources to run web service, php and database.
-
+This is great, because it will serve HTML directly to a user bypassing web server, php and a database.
