@@ -32,7 +32,7 @@ Or if you really want to use a folder, you will have to add a path in webpack.co
 
 ### Scraping
 To scrape a channel use following command and specify a Youtube Channel ID. 
-This command will fetch all videos or fetch only new videos if Channel already exist in your database. 
+This command will fetch all videos or fetch only new videos if a channel already exist in your database. 
 ```
 php bin/console app:get-videos UCnciA_RZVjq9DMvx1KB625Q
 ```
