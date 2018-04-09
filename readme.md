@@ -15,7 +15,6 @@ edit .env file (set DATABASE_URL and GOOGLE_API_KEY) and run:
 ```
 php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate
-
 ```
 build frontend:
 ```
@@ -30,7 +29,6 @@ Or if you really want to use a folder, you will have to add a path in webpack.co
 ```
 .setPublicPath('/youtube-scraper/public/build')
 ```
-
 
 ### Scraping
 To scrape a channel use following command and specify a Youtube Channel ID. 
