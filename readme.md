@@ -13,6 +13,7 @@ npm install
 ```
 edit .env file (set DATABASE_URL and GOOGLE_API_KEY) and run:
 ```
+php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate
 
 ```
@@ -31,6 +32,11 @@ php bin/console app:get-videos UCnciA_RZVjq9DMvx1KB625Q
 To scrape only statistics (views, likes, dislikes, comments and favorites) use following command:
 ```
 php bin/console app:get-stats UCnciA_RZVjq9DMvx1KB625Q
+```
+
+You can now access results at:
+```
+http://localhost/youtube-scraper/public/
 ```
 
 Each scraper request gets you 50 Videos.  
